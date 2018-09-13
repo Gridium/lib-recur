@@ -30,9 +30,9 @@ public final class FreqIterator extends ByExpander
 {
     /**
      * Stop iterating (throwing an exception) if this number of empty sets passed in a line, i.e. sets that contain no elements because they have been
-     * filtered. 4320 is 3 days of minutes.
+     * filtered. 35040 is 24 days, or a year's worth of 15-minute intervals
      */
-    private final static int MAX_EMPTY_SETS = 4320;
+    private final static int MAX_EMPTY_SETS = 35040;
 
     /**
      * The base frequency of the rule.
@@ -84,14 +84,14 @@ public final class FreqIterator extends ByExpander
     {
         final CalendarMetrics calendarMetrics = mCalendarMetrics;
 
-        long result;
+        long result = 0;
         int errorCountdown = MAX_EMPTY_SETS;
         do
         {
             // ensure we're not trapped in an infinite loop
             if (--errorCountdown < 0)
             {
-                throw new IllegalArgumentException("too many empty recurrence sets");
+                throw new IllegalArgumentException("too many empty recurrence sets: "+MAX_EMPTY_SETS);
             }
 
             result = mNextInstance;
